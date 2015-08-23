@@ -23,7 +23,7 @@ Update.Table("Counters").Set(new { NumType = "NextNodeID", NextNum = 1,
 
 # Example Usage
 
-All options are controlled in [App.config](https://github.com/TownSuite/DataMigrator/DataMigrator).  Make your changes there and run the console app DataMigrator.exe
+All options are controlled in [App.config](https://github.com/TownSuite/DataMigrator/blob/master/DataMigrator/App.config).  Make your changes there and run the console app DataMigrator.exe
 
 
 So the options include
