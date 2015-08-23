@@ -2,6 +2,7 @@ DataMigrator will scan a specified sql server database and export [FluentMigrato
 
 This is a quick hack to take existing data and create a [FluentMigrator](https://github.com/schambers/fluentmigrator) profile.
 
+![Status Badge](https://travis-ci.org/TownSuite/DataMigrator.svg?branch=master)
 
 # Example FluentMigrator Output
 
