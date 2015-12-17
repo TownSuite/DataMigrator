@@ -33,7 +33,14 @@ namespace DataMigrator
             {
                 return new System.Data.SqlClient.SqlConnection(connectionStr);
             }
-      
+
+        }
+
+
+        public static IEnumerable<string> OnlyTheseTables
+        {
+            get;
+            private set;
         }
 
         public static IEnumerable<string> IgnoreTables
@@ -71,7 +78,7 @@ namespace DataMigrator
         static void Main(string[] args)
         {
             connectionStr = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnectionString"].ConnectionString;
-            
+
             SaveFile = System.Configuration.ConfigurationManager.AppSettings["SaveFile"].ToString();
 
             SetIgnoreTable();
@@ -86,6 +93,13 @@ namespace DataMigrator
 
         private static void SetIgnoreTable()
         {
+            var whiteList = System.Configuration.ConfigurationManager.AppSettings["OnlyTheseTables"].ToString();
+
+            if (!string.IsNullOrWhiteSpace(whiteList))
+            {
+                OnlyTheseTables = whiteList.Split(',').Select(p => p.Trim()).ToList();
+                return;
+            }
             var ignore = System.Configuration.ConfigurationManager.AppSettings["IgnoreTables"].ToString();
             if (!string.IsNullOrWhiteSpace(ignore))
             {
@@ -120,7 +134,7 @@ namespace DataMigrator
 
                 var specialIgnore = new List<Tuple<string, string, string>>();
 
-                foreach(var item in split)
+                foreach (var item in split)
                 {
                     var tableSplit = item.Split(';');
                     var tuple = new Tuple<string, string, string>(tableSplit[0], tableSplit[1], tableSplit[2]);
@@ -129,6 +143,11 @@ namespace DataMigrator
 
                 SpecialIgnores = specialIgnore;
             }
+            else
+            {
+                SpecialIgnores = new List<Tuple<string, string, string>>();
+            }
+
         }
 
 

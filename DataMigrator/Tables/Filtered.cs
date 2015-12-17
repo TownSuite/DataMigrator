@@ -29,14 +29,9 @@ namespace DataMigrator.Tables
     public class Filtered
     {
 
-        private Filtered()
+        public Filtered()
         {
-        }
-
-        private IEnumerable<string> ignoreTables;
-        public Filtered(IEnumerable<string> ignoreTables)
-        {
-            this.ignoreTables = ignoreTables;
+           
         }
 
         public IEnumerable<string> Values
@@ -45,11 +40,19 @@ namespace DataMigrator.Tables
             {
                 var filter = new Filters();
                 var data = Poco.TableName.Retrieve();
-                var extraFilters = ignoreTables.Where(p => p.EndsWith("*")).Select(p => p.Replace("*", ""));
-                var keepList = filter.KeepList(data, ignoreTables, extraFilters).ToList();
-                filter.SetTableOrder(keepList);
 
-                return keepList;
+                if (Program.OnlyTheseTables.Any())
+                {
+                    return Program.OnlyTheseTables;
+                }
+                else
+                {
+                    var extraFilters = Program.IgnoreTables.Where(p => p.EndsWith("*")).Select(p => p.Replace("*", ""));
+                    var keepList = filter.KeepList(data, Program.IgnoreTables, extraFilters).ToList();
+                    filter.SetTableOrder(keepList);
+
+                    return keepList;
+                }
             }
         }
 

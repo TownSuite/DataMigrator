@@ -45,7 +45,7 @@ namespace DataMigrator
             Program.Write("        {" + System.Environment.NewLine);
             Program.Write("            CustomData();" + System.Environment.NewLine);
             Program.Write(System.Environment.NewLine);
-            var tables = new Tables.Filtered(Program.IgnoreTables);
+            var tables = new Tables.Filtered();
 
             foreach (var table in tables.Values)
             {
